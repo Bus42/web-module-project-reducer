@@ -10,7 +10,7 @@ import CalcButton from "./components/CalcButton";
 import reducer, { initialState } from "./reducers/index";
 
 // import { addOne, applyNumber } from "./actions";
-import { applyNumber, changeOperation } from "./actions";
+import { applyNumber, changeOperation, clearDisplay } from "./actions";
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -20,15 +20,21 @@ function App() {
   // };
 
   const handleNumClick = (e) => {
+    console.log(`handleNumClick(${e.target.innerText})`)
     // e.target.value will not work here
     const { innerText } = e.target;
     dispatch(applyNumber(innerText));
   };
 
   const handleOperatorClick = (e) => {
+    console.log(`handleOperatorClick(${e.target.innerText})`)
     const { innerText } = e.target;
-    dispatch(applyNumber(innerText));
+    dispatch(changeOperation(innerText));
   };
+
+  const handleCEClick = () => {
+    dispatch(clearDisplay())
+  }
 
   return (
     <div className="App">
@@ -53,9 +59,9 @@ function App() {
             </div>
 
             <div className="row">
-              <CalcButton onClick={handleOperatorClick} value={"M+"} />
-              <CalcButton onClick={handleOperatorClick} value={"MR"} />
-              <CalcButton onClick={handleOperatorClick} value={"MC"} />
+              <CalcButton value={"M+"} />
+              <CalcButton value={"MR"} />
+              <CalcButton value={"MC"} />
             </div>
 
             <div className="row">
@@ -78,13 +84,13 @@ function App() {
             </div>
 
             <div className="row">
-              <CalcButton onClick={handleNumClick} value={"+"} />
-              <CalcButton onClick={handleNumClick} value={"*"} />
-              <CalcButton onClick={handleNumClick} value={"-"} />
+              <CalcButton onClick={handleOperatorClick} value={"+"} />
+              <CalcButton onClick={handleOperatorClick} value={"*"} />
+              <CalcButton onClick={handleOperatorClick} value={"-"} />
             </div>
 
             <div className="row ce_button">
-              <CalcButton value={"CE"} />
+              <CalcButton value={"CE"} onClick={handleCEClick} />
             </div>
           </form>
         </div>
