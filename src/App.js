@@ -10,7 +10,7 @@ import CalcButton from "./components/CalcButton";
 import reducer, { initialState } from "./reducers/index";
 
 // import { addOne, applyNumber } from "./actions";
-import { applyNumber } from "./actions";
+import { applyNumber, changeOperation } from "./actions";
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -21,6 +21,11 @@ function App() {
 
   const handleNumClick = (e) => {
     // e.target.value will not work here
+    const { innerText } = e.target;
+    dispatch(applyNumber(innerText));
+  };
+
+  const handleOperatorClick = (e) => {
     const { innerText } = e.target;
     dispatch(applyNumber(innerText));
   };
@@ -48,9 +53,9 @@ function App() {
             </div>
 
             <div className="row">
-              <CalcButton value={"M+"} />
-              <CalcButton value={"MR"} />
-              <CalcButton value={"MC"} />
+              <CalcButton onClick={handleOperatorClick} value={"M+"} />
+              <CalcButton onClick={handleOperatorClick} value={"MR"} />
+              <CalcButton onClick={handleOperatorClick} value={"MC"} />
             </div>
 
             <div className="row">
